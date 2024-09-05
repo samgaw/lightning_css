@@ -2,6 +2,7 @@ defmodule LightningCSS do
   @moduledoc "README.md" |> File.read!() |> String.split("<!-- MDOC !-->") |> Enum.fetch!(1)
 
   use Application
+
   require Logger
 
   def start(_, _) do
@@ -36,12 +37,11 @@ defmodule LightningCSS do
   Runs the given command with `args`.
 
   The given args will be appended to the configured args.
-  The task output will be streamed directly to stdio. It
-  returns the status of the underlying call.
+  The task output will be streamed directly to stdio. It returns the status of the underlying call.
   """
   @spec run(atom(), list(), Keyword.t()) :: :ok | {:error, {:exited, integer()}}
   def run(profile, extra_args, opts) when is_atom(profile) and is_list(extra_args) do
-    watch = opts |> Keyword.get(:watch, false)
+    watch = Keyword.get(opts, :watch, false)
 
     id =
       ([profile] ++ extra_args ++ [watch]) |> Enum.map_join("_", &to_string/1) |> String.to_atom()
@@ -87,7 +87,7 @@ defmodule LightningCSS do
     run(profile, args, opts)
   end
 
-  defp start_unique_install_worker() do
+  defp start_unique_install_worker do
     ref =
       __MODULE__.Supervisor
       |> Supervisor.start_child(

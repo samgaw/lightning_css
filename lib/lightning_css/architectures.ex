@@ -77,7 +77,7 @@ defmodule LightningCSS.Architectures do
   end
 
   defp only_64bits do
-    if :erlang.system_info(:wordsize) != 8 do
+    unless :erlang.system_info(:wordsize) == 8 do
       raise "lightning_css is not available for a non 64-bit operating system"
     end
   end
