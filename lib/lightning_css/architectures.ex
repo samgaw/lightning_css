@@ -1,27 +1,19 @@
 defmodule LightningCSS.Architectures do
-  @moduledoc """
-  This module groups functions to read the architecture from the environment in which the code is running.
-  """
-
-  # Available targets: https://registry.npmjs.org/lightningcss-cli/latest
-  #
-  # For 1.24.1:
-  # lightningcss-cli-darwin-x64
-  # lightningcss-cli-linux-x64-gnu
-  # lightningcss-cli-win32-x64-msvc
-  # lightningcss-cli-darwin-arm64
-  # lightningcss-cli-linux-arm64-gnu
-  # lightningcss-cli-linux-arm-gnueabihf
-  # lightningcss-cli-linux-arm64-musl
-  # lightningcss-cli-linux-x64-musl
-  # lightningcss-cli-freebsd-x64
+  @moduledoc false
 
   def target do
     case :os.type() do
-      {:win32, _} -> target(:win32)
-      {:unix, :darwin} -> target(:darwin)
-      {:unix, :linux} -> target(:linux)
-      _ -> unsupported_os()
+      {:win32, _} ->
+        target(:win32)
+
+      {:unix, :darwin} ->
+        target(:darwin)
+
+      {:unix, :linux} ->
+        target(:linux)
+
+      _ ->
+        unsupported_os()
     end
   end
 
@@ -45,9 +37,10 @@ defmodule LightningCSS.Architectures do
   defp target(:linux) do
     {arch, toolchain} = arch_info()
 
-    if arch == "arm" && toolchain == "gnueabihf",
-      do: "linux-arm-gnueabihf",
-    else: only_64bits()
+    if arch == "arm" && toolchain == "gnueabihf" do
+      "linux-arm-gnueabihf"
+    else
+      only_64bits()
 
       arch =
         case arch do
@@ -58,7 +51,9 @@ defmodule LightningCSS.Architectures do
           _ -> unsupported_arch()
         end
 
-      unless toolchain in ~w[gnu musl], do: unsupported_arch()
+      unless toolchain in ~w[gnu musl] do
+        unsupported_arch()
+      end
 
       "linux-#{arch}-#{toolchain}"
     end
@@ -76,15 +71,15 @@ defmodule LightningCSS.Architectures do
 
   defp only_64bits do
     unless :erlang.system_info(:wordsize) == 8 do
-      raise "lightning_css is not available for a non 64-bit operating system"
+      raise("lightning_css is not available for a non 64-bit operating system")
     end
   end
 
   defp unsupported_os do
-    raise "lightning_css is not available for operating system: #{inspect(:os.type())}"
+    raise("lightning_css is not available for operating system: #{inspect(:os.type())}")
   end
 
   defp unsupported_arch do
-    raise "lightning_css is not available for architecture: #{:erlang.system_info(:system_architecture)}"
+    raise("lightning_css is not available for architecture: #{:erlang.system_info(:system_architecture)}")
   end
 end

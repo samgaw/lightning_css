@@ -31,13 +31,10 @@ defmodule LightningCSS.MixProject do
     [
       {:castore, ">= 0.0.0"},
       {:file_system, "~> 1.0"},
-      {:modulex, "~> 0.7", runtime: false},
-      {:boundary, "~> 0.10", runtime: false},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:styler, "~> 1.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.3", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
-      {:mimic, "~> 1.7", only: :test}
     ]
   end
 

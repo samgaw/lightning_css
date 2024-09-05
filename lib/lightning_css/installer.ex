@@ -1,13 +1,10 @@
 defmodule LightningCSS.Installer do
   @moduledoc """
-  This module encapsulates the installation logic that is responsible for pulling the right binary (version and architecture)
-  from the npm registry.
+  This module encapsulates the installation logic that is responsible for pulling the right binary (version and architecture) from the npm registry.
   """
   require Logger
 
-  @doc """
-  Installs lightning_css with `configured_version/0`.
-  """
+  @doc "Installs lightning_css with `configured_version/0`."
   def install do
     version = LightningCSS.Versions.to_use()
     tmp_opts = if System.get_env("MIX_XDG"), do: %{os: :linux}, else: %{}
@@ -18,8 +15,7 @@ defmodule LightningCSS.Installer do
         freshdir_p(Path.join(System.tmp_dir!(), "lightning_css")) ||
         raise "could not install lightning_css. Set MIX_XGD=1 and then set XDG_CACHE_HOME to the path you want to use as cache"
 
-    url =
-      "https://registry.npmjs.org/lightningcss-cli-#{target}/-/lightningcss-cli-#{target}-#{version}.tgz"
+    url = "https://registry.npmjs.org/lightningcss-cli-#{target}/-/lightningcss-cli-#{target}-#{version}.tgz"
 
     tar = fetch_body!(url)
 
