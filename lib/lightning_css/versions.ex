@@ -5,7 +5,7 @@ defmodule LightningCSS.Versions do
 
   # Package: https://registry.npmjs.org/lightningcss-cli/latest
   # Website: https://www.npmjs.com/package/lightningcss-cli
-  @latest_version "1.22.0"
+  @latest_version Application.compile_env(:lightning_css, :version)
 
   @doc """
   Returns the version of the lightning_css executable.

@@ -1,7 +1,7 @@
 import Config
 
 config :lightning_css,
-  version: "1.22.0",
+  version: "1.26.0",
   dev: [
     args: ~w(assets/foo.css --bundle --output-dir=static),
     watch_files: "assets",

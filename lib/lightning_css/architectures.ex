@@ -45,10 +45,9 @@ defmodule LightningCSS.Architectures do
   defp target(:linux) do
     {arch, toolchain} = arch_info()
 
-    if arch == "arm" && toolchain == "gnueabihf" do
-      "linux-arm-gnueabihf"
-    else
-      only_64bits()
+    if arch == "arm" && toolchain == "gnueabihf",
+      do: "linux-arm-gnueabihf",
+    else: only_64bits()
 
       arch =
         case arch do
@@ -59,9 +58,7 @@ defmodule LightningCSS.Architectures do
           _ -> unsupported_arch()
         end
 
-      unless toolchain in ~w[gnu musl] do
-        unsupported_arch()
-      end
+      unless toolchain in ~w[gnu musl], do: unsupported_arch()
 
       "linux-#{arch}-#{toolchain}"
     end
