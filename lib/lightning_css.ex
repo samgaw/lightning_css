@@ -1,5 +1,9 @@
 defmodule LightningCSS do
-  @moduledoc "README.md" |> File.read!() |> String.split("<!-- MDOC !-->") |> Enum.fetch!(1)
+  @moduledoc
+    "README.md"
+    |> File.read!()
+    |> String.split("<!-- MDOC !-->")
+    |> Enum.fetch!(1)
 
   use Application
 
@@ -44,7 +48,9 @@ defmodule LightningCSS do
     watch = Keyword.get(opts, :watch, false)
 
     id =
-      ([profile] ++ extra_args ++ [watch]) |> Enum.map_join("_", &to_string/1) |> String.to_atom()
+      ([profile] ++ extra_args ++ [watch])
+      |> Enum.map_join("_", &to_string/1)
+      |> String.to_atom()
 
     ref =
       __MODULE__.Supervisor
